@@ -4,6 +4,7 @@ const morgan = require('morgan');
 if (process.env.NODE_ENV !== 'production') require('dotenv').config();
 
 const userRouter = require('./routes/userRouter');
+const restaurantRouter = require('./routes/restaurantRouter');
 
 const app = express();
 
@@ -14,5 +15,6 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 app.use('/users', userRouter);
+app.use('/restaurants', restaurantRouter);
 
 module.exports = app;
