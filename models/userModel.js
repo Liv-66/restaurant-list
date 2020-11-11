@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema({
   },
   passwordConfirm: {
     type: String,
-    required: [true, '請再次輸入密碼。'],
+    required: [true, '密碼不相符，請再次輸入密碼。'],
     validate: {
       validator: function (el) {
         return el === this.password;
@@ -30,6 +30,7 @@ const userSchema = new mongoose.Schema({
 
 userSchema.pre('save', async function (next) {
   this.password = await bcrypt.hash(this.password, 10);
+  this.passwordConfirm = undefined;
 });
 
 const User = mongoose.model('User', userSchema);
