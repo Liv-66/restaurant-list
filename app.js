@@ -15,7 +15,13 @@ if (process.env.NODE_ENV !== 'production') {
   app.use(morgan('dev'));
 }
 
-app.use(bodyPaser());
+app.use(express.json({ limit: '10kb' }));
+app.use(
+  express.urlencoded({
+    extended: true,
+    limit: '10kb',
+  })
+);
 
 app.use('/users', userRouter);
 app.use('/restaurants', restaurantRouter);

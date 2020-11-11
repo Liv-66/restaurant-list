@@ -27,3 +27,19 @@ exports.createRestaurant = async (req, res, next) => {
   });
   next();
 };
+
+exports.updataRestaurant = async (req, res, next) => {
+  const newRestaurant = await Restaurant.findByIdAndUpdate(
+    req.params.id,
+    req.body,
+    {
+      new: true,
+      runValidators: true,
+      useFindAndModify: false,
+    }
+  );
+  res.status(200).json({
+    status: 'success',
+    data: newRestaurant,
+  });
+};
