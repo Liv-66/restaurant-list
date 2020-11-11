@@ -28,7 +28,7 @@ exports.createRestaurant = async (req, res, next) => {
   next();
 };
 
-exports.updataRestaurant = async (req, res, next) => {
+exports.updateRestaurant = async (req, res, next) => {
   const newRestaurant = await Restaurant.findByIdAndUpdate(
     req.params.id,
     req.body,
@@ -41,5 +41,12 @@ exports.updataRestaurant = async (req, res, next) => {
   res.status(200).json({
     status: 'success',
     data: newRestaurant,
+  });
+};
+
+exports.deleteRestaurant = async (req, res, next) => {
+  await Restaurant.findByIdAndDelete(req.params.id);
+  res.status(204).json({
+    statue: 'success',
   });
 };
