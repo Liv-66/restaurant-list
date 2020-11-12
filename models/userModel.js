@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, '請輸入密碼。'],
   },
-  passwordConfirm: {
+  confirmPassword: {
     type: String,
     required: [true, '密碼不相符，請再次輸入密碼。'],
     validate: {
@@ -30,7 +30,7 @@ const userSchema = new mongoose.Schema({
 
 userSchema.pre('save', async function (next) {
   this.password = await bcrypt.hash(this.password, 10);
-  this.passwordConfirm = undefined;
+  this.confirmPassword = undefined;
 });
 
 userSchema.methods.comparePassword = async function (

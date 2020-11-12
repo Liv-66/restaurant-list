@@ -7,6 +7,7 @@ const router = express.Router();
 router.get('/', viewController.getOverview);
 // router.get('/tour/:slug', authController.isLogedIn, viewController.getTour);
 router.get('/login', viewController.login);
+router.get('/signup', viewController.signup);
 router.get(
   '/restaurants',
   userController.isLogedIn,
