@@ -10,6 +10,11 @@ const restaurantSchema = new mongoose.Schema({
     default: 'restaurant-default.jpg',
   },
   description: String,
+  userId: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User',
+    // required: true,
+  },
 });
 
 const Restaurant = mongoose.model('Restaurant', restaurantSchema);
