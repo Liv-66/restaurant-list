@@ -37,8 +37,6 @@ userSchema.methods.comparePassword = async function (
   inputPassword,
   userPassword
 ) {
-  console.log(inputPassword);
-  console.log(userPassword);
   return await bcrypt.compare(inputPassword, userPassword);
 };
 

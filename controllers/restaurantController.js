@@ -1,6 +1,7 @@
 const Restaurant = require('../models/restaurantModel');
+const catchAsync = require('../config/catchAsync');
 
-exports.getAll = async (req, res, next) => {
+exports.getAll = catchAsync(async (req, res, next) => {
   const restaurants = await Restaurant.find();
   res.status(200).json({
     status: 'success',
@@ -8,27 +9,27 @@ exports.getAll = async (req, res, next) => {
     data: restaurants,
   });
   next();
-};
+});
 
-exports.getOne = async (req, res, next) => {
+exports.getOne = catchAsync(async (req, res, next) => {
   const restaurant = await Restaurant.findById(req.params.id);
   res.status(200).json({
     status: 'success',
     data: restaurant,
   });
   next();
-};
+});
 
-exports.createRestaurant = async (req, res, next) => {
+exports.createRestaurant = catchAsync(async (req, res, next) => {
   const restaurant = await Restaurant.create(req.body);
   res.status(201).json({
     status: 'success',
     data: restaurant,
   });
   next();
-};
+});
 
-exports.updateRestaurant = async (req, res, next) => {
+exports.updateRestaurant = catchAsync(async (req, res, next) => {
   const newRestaurant = await Restaurant.findByIdAndUpdate(
     req.params.id,
     req.body,
@@ -42,11 +43,11 @@ exports.updateRestaurant = async (req, res, next) => {
     status: 'success',
     data: newRestaurant,
   });
-};
+});
 
-exports.deleteRestaurant = async (req, res, next) => {
+exports.deleteRestaurant = catchAsync(async (req, res, next) => {
   await Restaurant.findByIdAndDelete(req.params.id);
   res.status(204).json({
     statue: 'success',
   });
-};
+});
