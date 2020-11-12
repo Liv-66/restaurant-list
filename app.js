@@ -40,8 +40,8 @@ app.use(
 usePassport(app);
 
 app.use((req, res, next) => {
-  // console.log('reqaa: ', req.body);
-  // console.log('res: ', res.user);
+  res.locals.isAuthenticated = req.isAuthenticated();
+  res.locals.user = req.user;
   next();
 });
 

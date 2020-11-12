@@ -7,8 +7,16 @@ const router = express.Router();
 router.get('/', viewController.getOverview);
 // router.get('/tour/:slug', authController.isLogedIn, viewController.getTour);
 router.get('/login', viewController.login);
-router.get('/restaurants', viewController.getRestaurants);
-router.get('/restaurant/new', viewController.newRestaurant);
+router.get(
+  '/restaurants',
+  userController.isLogedIn,
+  viewController.getRestaurants
+);
+router.get(
+  '/restaurant/new',
+  userController.isLogedIn,
+  viewController.newRestaurant
+);
 // router.get('/me', authController.protect, viewController.getMe);
 
 module.exports = router;

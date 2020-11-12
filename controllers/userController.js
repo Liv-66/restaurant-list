@@ -25,7 +25,7 @@ exports.login = passport.authenticate('local', {
 exports.logout = (req, res) => {
   req.logout();
   // req.flash('success_msg', '你已經成功登出。');
-  res.redirect('/users/login');
+  res.redirect('/login');
 };
 
 // exports.isLogedIn = async (req, res, next) => {
@@ -56,3 +56,9 @@ exports.logout = (req, res) => {
 //   // }
 //   next();
 // };
+
+exports.isLogedIn = (req, res, next) => {
+  if (req.isAuthenticated()) return next();
+  // req.flash('warning_msg', '請先登入才能使用！');
+  res.redirect('/login');
+};
