@@ -18,8 +18,8 @@ exports.signup = catchAsync(async (req, res, next) => {
 });
 
 exports.login = passport.authenticate('local', {
-  successRedirect: '/reataurants',
-  failureRedirect: '/users/login',
+  successRedirect: '/restaurants',
+  failureRedirect: '/login',
 });
 
 exports.logout = (req, res) => {
