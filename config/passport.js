@@ -12,7 +12,7 @@ module.exports = (app) => {
     new LocalStrategy(
       { usernameField: 'email' },
       async (email, password, done) => {
-        const user = await User.findOne({ email });
+        let user = await User.findOne({ email });
 
         if (!user) return done(null, false, { message: 'E-mail錯誤。' });
         if (!password || !(await user.comparePassword(password, user.password)))
@@ -29,24 +29,19 @@ module.exports = (app) => {
         callbackURL: process.env.FACEBOOK_CALLBACK,
         profileFields: ['email', 'displayName'],
       },
-      (accessToken, refreshToken, profile, done) => {
+      async (accessToken, refreshToken, profile, done) => {
         const { name, email } = profile._json;
-        User.findOne({ email }).then((user) => {
-          if (user) return done(null, user);
-          const randomPassword = Math.random.toString(36).slice(-8);
-          bcrypt
-            .genSalt(10)
-            .then((salt) => bcrypt.hash(randomPassword, salt))
-            .then((hash) =>
-              User.create({
-                name,
-                email,
-                password: hash,
-              })
-            )
-            .then((user) => done(null, user))
-            .catch((err) => done(err, false));
+        const user = await User.findOne({ email });
+        console.log('passport', user);
+        if (user) return done(null, user);
+        const randomPassword = Math.random.toString(36).slice(-8);
+        const newUser = await User.create({
+          name,
+          email,
+          password: randomPassword,
+          confirmPassword: randomPassword,
         });
+        return done(null, newUser);
       }
     )
   );
@@ -56,7 +51,7 @@ module.exports = (app) => {
   });
   passport.deserializeUser(async (id, done) => {
     await User.findById(id, (err, user) => {
-      done(err, user);
+      done(err, user.toJSON());
     });
   });
 };

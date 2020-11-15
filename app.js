@@ -8,6 +8,7 @@ if (process.env.NODE_ENV !== 'production') require('dotenv').config();
 const usePassport = require('./config/passport');
 
 const userRouter = require('./routes/userRouter');
+const authRouter = require('./routes/authRouter');
 const restaurantRouter = require('./routes/restaurantRouter');
 const viewRouter = require('./routes/viewRouter');
 
@@ -47,6 +48,7 @@ app.use((req, res, next) => {
 
 app.use('/', viewRouter);
 app.use('/users', userRouter);
+app.use('/auth', authRouter);
 app.use('/restaurants', restaurantRouter);
 
 app.use((req, res, next) => {
