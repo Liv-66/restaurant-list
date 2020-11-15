@@ -1,5 +1,6 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+const FacebookStrategy = require('passport-facebook');
 const User = require('../models/userModel');
 // const catchAsync = require('../config/catchAsync');
 
@@ -17,6 +18,35 @@ module.exports = (app) => {
         if (!password || !(await user.comparePassword(password, user.password)))
           return done(null, false, { message: '密碼錯誤。' });
         return done(null, user);
+      }
+    )
+  );
+  passport.use(
+    new FacebookStrategy(
+      {
+        clientID: process.env.FACEBOOK_ID,
+        clientSecret: process.env.FACEBOOK_SECRET,
+        callbackURL: process.env.FACEBOOK_CALLBACK,
+        profileFields: ['email', 'displayName'],
+      },
+      (accessToken, refreshToken, profile, done) => {
+        const { name, email } = profile._json;
+        User.findOne({ email }).then((user) => {
+          if (user) return done(null, user);
+          const randomPassword = Math.random.toString(36).slice(-8);
+          bcrypt
+            .genSalt(10)
+            .then((salt) => bcrypt.hash(randomPassword, salt))
+            .then((hash) =>
+              User.create({
+                name,
+                email,
+                password: hash,
+              })
+            )
+            .then((user) => done(null, user))
+            .catch((err) => done(err, false));
+        });
       }
     )
   );

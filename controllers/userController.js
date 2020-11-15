@@ -10,8 +10,8 @@ exports.signup = catchAsync(async (req, res, next) => {
     password,
     confirmPassword,
   });
-  // req.locals.isAuthenticated = true;
-  // res.redirect('/restaurants');
+  // res.locals.isAuthenticated = true;
+  res.redirect('/');
 });
 
 exports.login = passport.authenticate('local', {
