@@ -1,3 +1,4 @@
+const Restaurant = require('../models/restaurantModel');
 const catchAsync = require('../config/catchAsync');
 
 exports.getOverview = (req, res) => {
@@ -11,9 +12,18 @@ exports.signup = (req, res) => {
   res.status(200).render('signup');
 };
 
-exports.getRestaurants = (req, res) => {
-  res.status(200).render('restaurants');
+exports.getRestaurants = async (req, res) => {
+  const restaurants = await Restaurant.find().lean();
+
+  res.render('restaurants', { restaurants });
 };
+exports.updateRestaurant = async (req, res) => {
+  const id = req.params.id;
+  const restaurant = await Restaurant.findById(id).lean();
+  console.log(restaurant);
+  res.render('edit', { restaurant });
+};
+
 exports.newRestaurant = (req, res) => {
   res.status(200).render('new');
 };

@@ -22,10 +22,7 @@ exports.getOne = catchAsync(async (req, res, next) => {
 
 exports.createRestaurant = catchAsync(async (req, res, next) => {
   const restaurant = await Restaurant.create(req.body);
-  res.status(201).json({
-    status: 'success',
-    data: restaurant,
-  });
+  res.redirect('/restaurants')
   next();
 });
 
