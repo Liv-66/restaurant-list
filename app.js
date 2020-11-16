@@ -12,7 +12,6 @@ const userRouter = require('./routes/userRouter');
 const authRouter = require('./routes/authRouter');
 const restaurantRouter = require('./routes/restaurantRouter');
 const viewRouter = require('./routes/viewRouter');
-const errorHandler = require('./controllers/errorController');
 
 const app = express();
 
@@ -60,6 +59,5 @@ app.use('/users', userRouter);
 app.use('/auth', authRouter);
 app.use('/restaurants', restaurantRouter);
 
-app.use(errorHandler);
 
 module.exports = app;
