@@ -1,5 +1,6 @@
 const express = require('express');
 const session = require('express-session');
+const flash = require('connect-flash');
 const path = require('path');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
@@ -11,6 +12,7 @@ const userRouter = require('./routes/userRouter');
 const authRouter = require('./routes/authRouter');
 const restaurantRouter = require('./routes/restaurantRouter');
 const viewRouter = require('./routes/viewRouter');
+const errorHandler = require('./controllers/errorController');
 
 const app = express();
 
@@ -40,9 +42,16 @@ app.use(
 );
 usePassport(app);
 
+app.use(flash());
+
 app.use((req, res, next) => {
   res.locals.isAuthenticated = req.isAuthenticated();
   res.locals.user = req.user;
+  res.locals.success_msg = req.flash('success_msg');
+  res.locals.warning_msg = req.flash('warning_msg');
+
+  // console.log(res.locals.success_msg);
+  console.log(res.locals.warning_msg);
   next();
 });
 
@@ -51,10 +60,6 @@ app.use('/users', userRouter);
 app.use('/auth', authRouter);
 app.use('/restaurants', restaurantRouter);
 
-app.use((req, res, next) => {
-  // console.log('req: ', req.body);
-  // console.log('res: ', res.locals.user);
-  next();
-});
+app.use(errorHandler);
 
 module.exports = app;
