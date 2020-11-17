@@ -7,7 +7,8 @@
     "start": "node server.js",
     "dev": "nodemon server.js",
     "seed:delete": "node models/seeds/restaurantSeeder.js --delete",
-    "seed:import": "node models/seeds/restaurantSeeder.js --import"
+    "seed:import": "node models/seeds/restaurantSeeder.js --import",
+    "test": "standard && node server.js"
   },
   "author": "",
   "license": "ISC",
