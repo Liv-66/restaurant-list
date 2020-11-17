@@ -22,7 +22,7 @@ exports.getOne = catchAsync(async (req, res, next) => {
 
 exports.createRestaurant = catchAsync(async (req, res, next) => {
   const restaurant = await Restaurant.create(req.body);
-  res.redirect('/restaurants')
+  res.redirect('/restaurants');
   next();
 });
 
@@ -36,10 +36,8 @@ exports.updateRestaurant = catchAsync(async (req, res, next) => {
       useFindAndModify: false,
     }
   );
-  res.status(200).json({
-    status: 'success',
-    data: newRestaurant,
-  });
+  res.redirect('/restaurants');
+  next();
 });
 
 exports.deleteRestaurant = catchAsync(async (req, res, next) => {

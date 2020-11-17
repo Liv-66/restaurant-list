@@ -5,6 +5,8 @@ const path = require('path');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const exphbs = require('express-handlebars');
+const methodOverride = require('method-override');
+
 if (process.env.NODE_ENV !== 'production') require('dotenv').config();
 const usePassport = require('./config/passport');
 
@@ -39,6 +41,8 @@ app.use(
     limit: '10kb',
   })
 );
+app.use(methodOverride('_method'));
+
 usePassport(app);
 
 app.use(flash());
@@ -58,6 +62,5 @@ app.use('/', viewRouter);
 app.use('/users', userRouter);
 app.use('/auth', authRouter);
 app.use('/restaurants', restaurantRouter);
-
 
 module.exports = app;
