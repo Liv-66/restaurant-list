@@ -13,7 +13,7 @@ const users = JSON.parse(
 
 const importData = async () => {
   try {
-    await Restaurant.create(restaurants);
+    await Restaurant.create(restaurants, { validateBeforeSave: false });
     await User.create(users, { validateBeforeSave: false });
   } catch (err) {
     console.log(err);
