@@ -17,6 +17,12 @@ exports.getRestaurants = async (req, res) => {
 
   res.render('restaurants', { restaurants });
 };
+exports.getOne = async (req, res) => {
+  const id = req.params.id;
+  const restaurant = await Restaurant.findById(id).lean();
+
+  res.render('detail', { restaurant });
+};
 exports.updateRestaurant = async (req, res) => {
   const id = req.params.id;
   const restaurant = await Restaurant.findById(id).lean();

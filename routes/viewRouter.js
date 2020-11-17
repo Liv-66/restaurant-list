@@ -18,6 +18,7 @@ router.get(
   userController.isLogedIn,
   viewController.newRestaurant
 );
+router.get('/detail/:id', viewController.getOne);
 router.get('/update/:id', viewController.updateRestaurant);
 // router.get('/me', authController.protect, viewController.getMe);
 
