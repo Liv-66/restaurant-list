@@ -21,7 +21,8 @@ exports.getOne = catchAsync(async (req, res, next) => {
 });
 
 exports.createRestaurant = catchAsync(async (req, res, next) => {
-  const restaurant = await Restaurant.create(req.body);
+  if (!req.body.userId) req.body.userId = req.user._id;
+  await Restaurant.create(req.body);
   res.redirect('/restaurants');
   next();
 });
