@@ -42,7 +42,6 @@ exports.updateRestaurant = catchAsync(async (req, res, next) => {
 
 exports.deleteRestaurant = catchAsync(async (req, res, next) => {
   await Restaurant.findByIdAndDelete(req.params.id);
-  res.status(204).json({
-    statue: 'success',
-  });
+  res.redirect('/restaurants');
+  next();
 });
