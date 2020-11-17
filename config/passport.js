@@ -32,7 +32,6 @@ module.exports = (app) => {
       async (accessToken, refreshToken, profile, done) => {
         const { name, email } = profile._json;
         const user = await User.findOne({ email });
-        console.log('passport', user);
         if (user) return done(null, user);
         const randomPassword = Math.random.toString(36).slice(-8);
         const newUser = await User.create({

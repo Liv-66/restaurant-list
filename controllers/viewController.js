@@ -26,7 +26,6 @@ exports.getOne = async (req, res) => {
 exports.updateRestaurant = async (req, res) => {
   const id = req.params.id;
   const restaurant = await Restaurant.findById(id).lean();
-  console.log(restaurant);
   res.render('edit', { restaurant });
 };
 

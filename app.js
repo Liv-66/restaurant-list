@@ -52,9 +52,6 @@ app.use((req, res, next) => {
   res.locals.user = req.user;
   res.locals.success_msg = req.flash('success_msg');
   res.locals.warning_msg = req.flash('warning_msg');
-
-  // console.log(res.locals.success_msg);
-  console.log(res.locals.warning_msg);
   next();
 });
 
