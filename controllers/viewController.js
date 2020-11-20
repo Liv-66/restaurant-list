@@ -15,11 +15,9 @@ exports.signup = (req, res) => {
 };
 
 exports.getRestaurants = catchAsync(async (req, res) => {
-  console.log(req.user._id);
   const restaurants = await Restaurant.find({
     userId: req.user._id,
   }).lean();
-  console.log(restaurants);
 
   res.render('restaurants', { restaurants });
 });
